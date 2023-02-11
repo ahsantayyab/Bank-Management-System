@@ -1,355 +1,4 @@
-
-#include <iostream>
-#include <fstream>
-#include <string>
-
-using namespace std;
-
-int main() {
-    
-
-    ifstream source_file("q6.txt");
-    ofstream target_file("q7.txt");
-    string line;
-
-    if (source_file.is_open() && target_file.is_open()) {
-        while (getline(source_file, line)) {
-            target_file << line << endl;
-        }
-        source_file.close();
-        target_file.close();
-        cout << "File contents successfully copied." << endl;
-    } else {
-        cout << "Unable to open file for reading or writing." << endl;
-    }
-
-    return 0;
-}
-
-#include <iostream>
-#include <fstream>
-
-using namespace std;
-
-int main() {
-    
-    ifstream file;
-    file.open("q6.txt");
-
-    if (file.is_open()) {
-        int count = 0;
-        int number;
-        while (file >> number && count < 10) {
-            cout << number << endl;
-            count++;
-        }
-        file.close();
-
-        if (count < 10) {
-            cout << "The file is finished." << endl;
-        }
-    } else {
-        cout << "Unable to open file for reading." << endl;
-    }
-
-    return 0;
-}
-
-
-
-
-#include <iostream>
-#include <fstream>
-#include <string>
-
-using namespace std;
-
-int main() {
-    
-    ofstream file;
-    file.open("22arid713.txt", ios::app);
-
-    if (file.is_open()) {
-        string input;
-        cout << "Enter few lines about your favorite subject:" << endl;
-        getline(cin, input);
-        file << input << endl;
-        
-        file.close();
-        cout << "Data written to file successfully." << endl;
-    } else {
-        cout << "Unable to open file for writing." << endl;
-    }
-
-    return 0;
-}
-
-
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-
-int main() {
-    string word;
-    int count = 0;
-
-    cout << "Enter the word to search: ";
-    cin >> word;
-
-    ifstream file("q3.txt");
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            size_t pos = 0;
-            while ((pos = line.find(word, pos)) != string::npos) {
-                count++;
-                pos += word.length();
-            }
-        }
-        file.close();
-        cout << "The word '" << word << "' appeared " << count << " times in the file." << endl;
-    } else {
-        cout << "Unable to open the file." << endl;
-    }
-
-    return 0;
-}
-
-
-
-#include <iostream>
-#include <fstream>
-
-using namespace std;
-int main() {
-    string word;
-    int count = 0;
-
-    cout << "Enter the word to search: ";
-    cin >> word;
-
-    ifstream file("q3.txt");
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            size_t pos = 0;
-            while ((pos = line.find(word, pos)) != string::npos) {
-                count++;
-                pos += word.length();
-            }
-        }
-        file.close();
-        cout << "The word '" << word << "' appeared " << count << " times in the file." << endl;
-    } else {
-        cout << "Unable to open the file." << endl;
-    }
-
-    return 0;
-}
-
-
-
-
-
-
-//________________________________________________________________________________________________________________________________/
-
-
-//2
-int main(){
-    string fileName;
-    ofstream x;
-    x.open("data.txt");
-              string line;
-              int lineCount = 0;
-              int wordCount = 0;
-              int charCount = 0;
-              if (x.is_open()) {
-                  while(x.is_open()){
-                      lineCount++;
-                      int words = 0;
-                      for(int i = 0; line.length(); i++) {
-                          if (line[i] == wordCount){
-                              words++;
-                          }
-                      }
-                      wordCount += words + 1;
-                      charCount += line.length();
-                  }
-                  x.close();
-                  cout<<wordCount;
-                  cout<<lineCount;
-                  cout<<charCount;
-                }
-                else {
-                    cout<<"file not found";
-               }
-        return 0;
-}
-                                        //3
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-
-int main() {
-    string word;
-    int count = 0;
-
-    cout << "Enter the word to search: ";
-    cin >> word;
-
-    ifstream file("q3.txt");
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            size_t pos = 0;
-            while ((pos = line.find(word, pos)) != string::npos) {
-                count++;
-                pos += word.length();
-            }
-        }
-        file.close();
-        cout << "The word '" << word << "' appeared " << count << " times in the file." << endl;
-    } else {
-        cout << "Unable to open the file." << endl;
-    }
-
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const int ROW = 3;
-const int COL = 3;
-
-int main() {
-    int arr1[ROW][COL] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-    int arr2[ROW][COL] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-    int res[ROW][COL] = {0};
-
-    // Multiply the two arrays
-    for (int i = 0; i < ROW; i++) {
-        for (int j = 0; j < COL; j++) {
-            for (int k = 0; k < ROW; k++) {
-                res[i][j] += arr1[i][k] * arr2[k][j];
-            }
-        }
-    }
-
-    // Print the result
-    for (int i = 0; i < ROW; i++) {
-        for (int j = 0; j < COL; j++) {
-            cout << res[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-    return 0;
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-int main(){
-    int a;
-    cout<<"Enter a Number : ";
-    cin>>a;
-    int* ptr = &a;
-    cout<<"Address of Your Number is :"<<ptr<<endl;
-    cout<<"Address of Your Number is :"<<&ptr<<endl;
-    cout<<"Address of Your Number is :"<<&a<<endl;
-    cout<<"Address of ";
-    return 0;
-}
-
-
-
-
-void sum();
-int a;
-int main(){
-    int n[0];
-    int a=0,i,j;
-    cout<<"How many Numbers You Want to Enter : ";
-    cin>>i;
-    cout<<"\n\nEnter Numbers :";
-    for(j=1;j<=i;j++)
-    {
-        cin>>n[i];
-    }
-    
-    sum();
-    return 0;
-}
-void sum(){
-    {
-        for(int j=1;j<=i;j++)
-        {
-            
-        }
-        cout<<"Sum of all numbers is "<<a;
-
-    }
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*#include<iostream>
+#include<iostream>
 #include<fstream>
 #include<string>
 
@@ -364,13 +13,12 @@ void transaction();
 void reporting();
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-///. Account
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 //1.
 void newaccount();
 //2.
 void info();
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 //Information...
 int searchACC();
 void updateData();
@@ -384,17 +32,12 @@ int deposit();
 void withdrawal();
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 //Reporting...
 void account_summeries();
 
-
-
-
 //Global Variable
 int ID;
-
-
 
 struct Account{
     int id;
@@ -405,7 +48,7 @@ struct Account{
 
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 int main(){
     int n;
     
@@ -639,9 +282,7 @@ int searchACC() {
     
 }
 
-
-
-void updateData() {
+void updateData(){
     int id = searchACC();
     cout << "\n\tYou want to update Account (y/n) : ";
     char choice;
@@ -796,51 +437,40 @@ void withdrawal(){
 }
 
 
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
 ///                                                           Reporting...
 ///---------------------------------------------------------------
 ///---------------------------------------------------------------------------------------------------------------    3
 
-void account_summeries(){
-    int id,n,a;
-    cout << "\t\t\tAre you want to see All Accounts Details : "<<endl<<endl;
-    cout << "\t\t\tPress 1 to continue : "<<endl<<endl;
-    cout << "\t\t\tPress 0 to Back : "<<endl;
-    cin>>n;
-    if(n==1){
-        cout<<"Enter Password :";
-        cin>>id;
-        a=123;
-        if(id == a){
-            Account acc;
-            ifstream read;
-            read.open("data.txt");
-            while (!read.eof()) {
-                read >> acc.id;
-                read.ignore();
-                getline(read, acc.name);
-                getline(read, acc.fname);
-                getline(read, acc.dob);
-                
-                cout<<"\t\t\t\t\tAccount Number : "<<acc.id<<endl;
-                cout<<"\t\tUser Name : "<<acc.name<<endl;
-                cout<<"\t\tUser Father Name : "<<acc.fname<<endl;
-                cout<<"\t\tUser Date of Birth : "<<acc.dob<<endl<<endl<<endl<<endl;
-                
+    void account_summeries(){
+        int id,n,a;
+        cout << "\t\t\tAre you want to see All Accounts Details : "<<endl<<endl;
+        cout << "\t\t\tPress 1 to continue : "<<endl<<endl;
+        cout << "\t\t\tPress 0 to Back : "<<endl;
+        cin>>n;
+        if(n==1){
+            cout<<"Enter Password :";
+            cin>>id;
+            a=123;
+            if(id == a){
+                Account acc;
+                ifstream read;
+                read.open("data.txt");
+                while (!read.eof()) {
+                    read >> acc.id;
+                    read.ignore();
+                    getline(read, acc.name);
+                    getline(read, acc.fname);
+                    getline(read, acc.dob);
+                    
+                    cout<<"\t\t\t\t\tAccount Number : "<<acc.id<<endl;
+                    cout<<"\t\tUser Name : "<<acc.name<<endl;
+                    cout<<"\t\tUser Father Name : "<<acc.fname<<endl;
+                    cout<<"\t\tUser Date of Birth : "<<acc.dob<<endl<<endl<<endl<<endl;
+                    
+                }
             }
+            main();
+            
         }
-        main();
         
     }
-}
-
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-
-*/
-
-
-
-
