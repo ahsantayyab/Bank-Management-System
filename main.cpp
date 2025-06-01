@@ -1,476 +1,398 @@
-#include<iostream>
-#include<fstream>
-#include<string>
-
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
- 
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-//Main Objectives...
-void account();
-void transaction();
-void reporting();
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-//1.
-void newaccount();
-//2.
-void info();
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-//Information...
-int searchACC();
-void updateData();
-
-//3.
-void closeaccount();
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-//Transaction processing...
-int deposit();
-void withdrawal();
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------
-//Reporting...
-void account_summeries();
-
-//Global Variable
-int ID;
-
-struct Account{
-    int id;
+class Customer {
+private:
     string name;
-    string fname;
-    string dob;
+    string address;
+    string contactDetails;
+
+public:
+    Customer(const string& nm, const string& addr, const string& contact):
+    name(nm), address(addr), contactDetails(contact) {
+    }
+    void display() const {
+        cout << "Customer Name: " << name << endl;
+        cout << "Address: " << address << endl;
+        cout << "Contact Details: " << contactDetails << endl;
+    }
 };
 
+class Account {
+protected:
+    string accountNumber;
+    double balance;
+    vector<string> transactionHistory;
 
+public:
+    Account(const string& accNum, double bal)
+        : accountNumber(accNum), balance(bal) {}
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------
-int main(){
-    int n;
-    
-    cout<<endl<<"                                                         Banking Management System  "<<endl<<endl<<endl;
-    
-    cout<<"1. Customer account management..."<<endl;
-    cout<<"2. Transaction processing..."<<endl;
-    cout<<"3. Reporting..."<<endl;
-    
-    cout<<"Select (1-3)"<<endl;
-    cout<<"Enter  ";cin>>n;
-    
-    switch (n) {
-        case 1:
-            account();
-            break;
-        case 2:
-            transaction();
-            break;
-        case 3:
-            reporting();
-            break;
-        default:
-            cout<<"You Entered Invalid input"<<endl;
-            break;
+    virtual void display() const {
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Balance: Rs." << balance << endl;
     }
-     
-    cout<<endl;
-    return 0;
-}
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-void account(){
-    int n;
-    cout<<"Customer account management:"<<endl<<endl;
-    cout<<"                            1. Create New Account."<<endl;
-    cout<<"                            2. View & Update Information."<<endl;
-    cout<<"                            3. Close Existing Account."<<endl;
-    cout<<"                            4. Back"<<endl;
-    
-    cout<<"Select (1-4)"<<endl;
-    cout<<"Enter  ";cin>>n;
-    cout<<endl<<endl<<endl;
-    switch (n) {
-        case 1:
-            cout<<"Create New Account:"<<endl;
-            newaccount();
-            break;
-        case 2:
-            cout<<"View & Update Information:"<<endl;
-            info();
-            break;
-        case 3:
-            cout<<"Close Existing Account:"<<endl;
-            closeaccount();
-            break;
-        case 4:
-            main();
-            break;
-        default:
-            cout<<"You Entered Invalid input"<<endl;
-            break;
+
+    double getBalance() const {
+        return balance;
     }
-}
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-void transaction(){
-    int n;
-    cout<<"Transaction processing:"<<endl<<endl;
-    cout<<"                            1. Deposit."<<endl;
-    cout<<"                            2. Withdrawal."<<endl;
-    cout<<"                            3. Back"<<endl;
-    
-    cout<<"Select (1-3)"<<endl;
-    cout<<"Enter  ";cin>>n;
-    cout<<endl<<endl<<endl;
-    switch (n) {
-        case 1:
-            cout<<"Deposit:"<<endl;
-            deposit();
-            break;
-        case 2:
-            cout<<"Withdrawal:"<<endl;
-            withdrawal();
-            break;
-        case 3:
-            main();
-            break;
-        default:
-            cout<<"You Entered Invalid input"<<endl;
-            break;
+
+    void deposit(double amount) {
+        balance += amount;
+        string transaction = "Deposit: +Rs." + to_string(amount);
+        transactionHistory.push_back(transaction);
     }
-}
 
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------//
-void reporting(){
-    int n;
-    cout<<"Reporting:"<<endl<<endl;
-    cout<<"                            1. Customer Account Summaries."<<endl;
-    cout<<"                            2. Back"<<endl;
-    
-    cout<<"Select (1-2)"<<endl;
-    cout<<"Enter  ";cin>>n;
-    cout<<endl<<endl<<endl;
-    switch (n) {
-        case 1:
-            cout<<"Customer Account Summaries:"<<endl;
-            account_summeries();
-            break;
-        case 2:
-            main();
-            break;
-        default:
-            cout<<"You entered Invalid input"<<endl;
-            break;
-    }
-}
-//----------------------------------------------------------------------------------------------------------------------------------------------------/
-//----------------------------------------------------------------------------------------------------------------------------------------------------/
-
-void newaccount(){
-    Account acc;
-    cout << "\n\tEnter User name : ";
-    cin.get();
-    getline(cin, acc.name);
-    cout<<endl;
-    cout<<"\n\t Enter User Father Name : ";
-    getline(cin, acc.fname);
-    cout<<endl;
-    cout<<"\n\t Enter Date of birth dd-mm-yyyy    :";
-    getline(cin, acc.dob);
-    cout<<endl;
-    ID++;
-
-    ofstream write;
-    write.open("data.txt", ios::app);
-    write << "\n" << ID;
-    write << "\n" << acc.name ;
-    write << "\n" << acc.fname ;
-    write << "\n" << acc.dob ;
-    
-    write.close();
-    write.open("max_acc.txt");
-    write << ID;
-    write.close();
-    cout << "\n\tAccount Created SuceessFully";
-    cout<<"\n\n\tYour Account Number is  "<<ID;
-    
-    main();
-}
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-void info(){
-    int n;
-    cout<<"View & Update Information :"<<endl<<endl;
-    cout<<"                            1. Veiw Or Search Account"<<endl;
-    cout<<"                            2. Update User Acoount"<<endl;
-    cout<<"                            3. Back"<<endl;
-    
-    cout<<"Select (1-3)"<<endl;
-    cout<<"Enter  ";cin>>n;
-    cout<<endl<<endl<<endl;
-    switch (n) {
-        case 1:
-            cout<<"Veiw Or Search Account:"<<endl;
-            searchACC();
-            break;
-        case 2:
-            cout<<"Update User Acoount:"<<endl;
-            updateData();
-            break;
-        case 3:
-            main();
-            break;
-        default:
-            cout<<"You entered Invalid input"<<endl;
-            break;
-    }
-}
-
-
-
-//--------------------------------------------------------------------------------------------------------------------------------//
-
-void print(Account s) {
-    cout << "\n\t---Account Information---";
-    cout << "\n\tID is : " << s.id;
-    cout << "\n\tName is : " << s.name;
-    cout << "\n\tFather Name is : " << s.fname;
-    cout << "\n\tDate of Birth is : " << s.dob;
-
-}
-
-void readData() {
-    Account acc;
-    ifstream read;
-    read.open("data.txt");
-    while (!read.eof()) {
-        read >> acc.id;
-        read.ignore();
-        getline(read, acc.name);
-        getline(read, acc.fname);
-        getline(read, acc.dob);
-        print(acc);
-    }
-    read.close();
-}
-
-int searchACC() {
-    int id;
-    cout << "\n\tEnter Account ID to search : ";
-    cin >> id;
-    Account acc;
-    ifstream read;
-    read.open("data.txt");
-    while (!read.eof()) {
-        read >> acc.id;
-        getline(read, acc.name);
-        getline(read, acc.fname);
-        getline(read, acc.dob);
-        if (acc.id == id) {
-            print(acc);
-            return id;
+    virtual void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            string transaction = "Withdrawal: -Rs." + to_string(amount);
+            transactionHistory.push_back(transaction);
         }
-        else{
-            cout<<"Invalid Account No";
+        else {
+            cout << "Insufficient funds." << endl;
         }
-    
-    main();
-    return 0;
-    
-}
+    }
 
-void updateData(){
-    int id = searchACC();
-    cout << "\n\tYou want to update Account (y/n) : ";
-    char choice;
-    cin >> choice;
-    if (choice == 'y') {
-        Account newAcc;
-        cout << "\n\tEnter User name : ";
-        cin.get();
-        getline(cin, newAcc.name);
-        cout<<"\t\t\t\t Enter User Father Name:";
-        getline(cin, newAcc.fname);
-        cout<<endl;
-        cout<<"\t\t\t\t Enter Date of birth dd-mm-yyyy    :";
-        getline(cin, newAcc.dob);
-        cout<<endl;
+    void displayTransactionHistory() const {
+        cout << "Transaction History:" << endl;
+        for (const string& transaction : transactionHistory) {
+            cout << "- " << transaction << endl;
+        }
+    }
+};
+
+class SavingsAccount : public Account {
+private:
+    double interestRate;
+
+public:
+    SavingsAccount(const string& accNum, double bal, double intRate)
+        : Account(accNum, bal), interestRate(intRate) {}
+
+    void display() const override {
+        Account::display();
+        cout << "Interest Rate: " << interestRate << "%" << endl;
+    }
+
+    void withdraw(double amount) override {
+        double totalBalance = balance + (balance * interestRate / 100);
+        if (totalBalance >= amount) {
+            balance -= amount;
+            string transaction = "Withdrawal: -Rs." + to_string(amount);
+            transactionHistory.push_back(transaction);
+        }
+        else {
+            cout << "Insufficient funds (including interest)." << endl;
+        }
+    }
+
+};
+
+class CurrentAccount : public Account {
+public:
+    CurrentAccount(const string& accNum, double bal)
+        : Account(accNum, bal) {}
+
+    void withdraw(double amount) override {
+        if (balance >= amount) {
+            balance -= amount;
+            string transaction = "Withdrawal: -Rs." + to_string(amount);
+            transactionHistory.push_back(transaction);
+        }
+        else {
+            cout << "Insufficient funds." << endl;
+        }
+    }
+};
+
+void createAccount() {
+    string name, address, contact;
+    cout << "Enter Customer Name: ";
+    cin.ignore();
+    getline(cin, name);
+    cout << "Enter Address: ";
+    getline(cin, address);
+    cout << "Enter Contact Details: ";
+    getline(cin, contact);
+
+    Customer customer(name, address, contact);
+
+    double initialBalance;
+    cout << "Enter Initial Balance: Rs.";
+    cin >> initialBalance;
+
+    string accountNumber;
+    cout << "Enter Account Number: ";
+    cin.ignore();
+    getline(cin, accountNumber);
+
+    int accountType;
+    cout << "Select Account Type:" << endl;
+    cout << "1. Savings Account" << endl;
+    cout << "2. Current Account" << endl;
+    cout << "Enter Choice: ";
+    cin >> accountType;
+
+    Account* account;
+    if (accountType == 1) {
+        double interestRate;
+        cout << "Enter Interest Rate (%): ";
+        cin >> interestRate;
+        account = new SavingsAccount(accountNumber, initialBalance, interestRate / 100.0);
         
-        Account acc;
-        ofstream tempFile;
-        tempFile.open("temp.txt");
-        ifstream read;
-        read.open("data.txt");
-        while (!read.eof()) {
-            read >> acc.id;
-            getline(read, acc.name);
-            getline(read, acc.fname);
-            getline(read, acc.dob);
-            if (acc.id != id) {
-                tempFile << "\n" << acc.id;
-                tempFile << "\n" << acc.name;
-                tempFile << "\n" << acc.fname;
-                tempFile << "\n" << acc.dob;
+    }
+    else if (accountType == 2) {
+        account = new CurrentAccount(accountNumber, initialBalance);
+    }
+    else {
+        cout << "Invalid account type." << endl;
+        return;
+    }
+
+    ofstream out("Account.txt", ios::app);
+    if (out.is_open()) {
+        out << name << "," << address << "," << contact << "," << accountNumber << "," << initialBalance << "," << accountType << endl;
+        out.close();
+        cout << "Account created successfully." << endl;
+    }
+    else {
+        cout << "Error in creating account. Please try again." << endl;
+    }
+    delete account;
+}
+void displayAccount(const string& accountNumber) {
+    ifstream in("Account.txt");
+    if (in.is_open()) {
+        string line;
+        bool accountFound = false;
+
+        while (getline(in, line)) {
+            vector<string> accountDetails;
+            string detail;
+            stringstream ss(line);
+            while (getline(ss, detail, ',')) {
+                accountDetails.push_back(detail);
+            }
+            if (accountDetails[3] == accountNumber) {
+                accountFound = true;
+                Customer customer(accountDetails[0], accountDetails[1], accountDetails[2]);
+                customer.display();
+
+                int accountType = stoi(accountDetails[5]);
+                double balance = stod(accountDetails[4]);
+                double interestRate = 0.0;
+
+                if (accountType == 1) {
+                   interestRate = stod(accountDetails[6]);
+                }
+
+                Account* account;
+                if (accountType == 1) {
+                    account = new SavingsAccount(accountDetails[3], balance, interestRate);
+                }
+                else if (accountType == 2) {
+                    account = new CurrentAccount(accountDetails[3], balance);
+                }
+                else {
+                    cout << "Invalid account type." << endl;
+                    return;
+                }
+
+
+                account->display();
+                delete account;
+
+                break;
+            }
+        }
+
+        if (!accountFound) {
+            cout << "Account not found." << endl;
+        }
+
+        in.close();
+    }
+    else {
+        cout << "Error in opening account file." << endl;
+    }
+}
+
+
+void performDeposit(const string& accountNumber) {
+    double amount;
+    cout << "Enter the amount to deposit: Rs.";
+    cin >> amount;
+
+    ifstream in("Account.txt");
+    if (in.is_open()) {
+        string line;
+        bool accountFound = false;
+        vector<string> accountLines;
+
+        while (getline(in, line)) {
+            vector<string> accountDetails;
+            string detail;
+            stringstream ss(line);
+            while (getline(ss, detail, ',')) {
+                accountDetails.push_back(detail);
+            }
+            if (accountDetails[3] == accountNumber) {
+                accountFound = true;
+                double balance = stod(accountDetails[4]) + amount;
+                accountDetails[4] = to_string(balance);
+            }
+            accountLines.push_back(line);
+        }
+
+        in.close();
+
+        if (accountFound) {
+            ofstream out("Account.txt");
+            if (out.is_open()) {
+                for (const string& accountLine : accountLines) {
+                    out << accountLine << endl;
+                }
+                out.close();
+                cout << "Deposit successful." << endl;
             }
             else {
-                tempFile << "\n"<< acc.id;
-                tempFile << "\n"<< newAcc.name;
-                tempFile << "\n"<< newAcc.fname;
-                tempFile << "\n"<< newAcc.dob;
+                cout << "Error in opening account file for deposit." << endl;
             }
         }
-        read.close();
-        tempFile.close();
-        remove("data.txt");
-        rename("temp.txt", "data.txt");
-        cout << "\n\tData updated successfuly";
+        else {
+            cout << "Account not found." << endl;
+        }
     }
     else {
-        cout << "\n\tRecord not deleted";
+        cout << "Error in opening account file." << endl;
     }
-    main();
 }
 
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
-void closeaccount(){
-    int id = searchACC();
-    cout << "\n\tYou want to delete Account (Y/N) : ";
-    char choice;
-    cin >> choice;
-    if (choice == 'y') {
-        Account acc;
-        ofstream tempFile;
-        tempFile.open("temp.txt");
-        ifstream read;
-        read.open("data.txt");
-        while (!read.eof()) {
-            read >> acc.id;
-            read.ignore();
-            getline(read, acc.name);
-            getline(read, acc.fname);
-            getline(read, acc.dob);
-            if (acc.id != id) {
-                tempFile <<endl<< acc.id;
-                tempFile <<endl<< acc.name;
-                tempFile <<endl<< acc.fname;
-                tempFile <<endl<< acc.dob;
+void performWithdrawal(const string& accountNumber) {
+    double amount;
+    cout << "Enter the amount to withdraw: Rs.";
+    cin >> amount;
+
+    ifstream in("Account.txt");
+    if (in.is_open()) {
+        string line;
+        bool accountFound = false;
+        vector<string> accountLines;
+
+        while (getline(in, line)) {
+            vector<string> accountDetails;
+            string detail;
+            stringstream ss(line);
+            while (getline(ss, detail, ',')) {
+                accountDetails.push_back(detail);
             }
-        }
-        read.close();
-        tempFile.close();
-        remove("data.txt");
-        rename("temp.txt", "data.txt");
-        cout << "\n\tData deleted successfuly";
-    }
-    else {
-        cout << "\n\tRecord not deleted";
-    }
-    main();
-}
+            if (accountDetails[3] == accountNumber) {
+                accountFound = true;
+                double balance = stod(accountDetails[4]);
+                int accountType = stoi(accountDetails[5]);
 
-///                                                          Transaction processing...
-///---------------------------------------------------------------
-///-------------------------------------------------------------------------------------------------------------------    2
-
-int deposit(){
-    int id;
-    cout << "\n\tEnter Account ID to search : ";
-    cin >> id;
-    Account acc;
-    ifstream read;
-    read.open("data.txt");
-    while (!read.eof()) {
-        read >> acc.id;
-        getline(read, acc.name);
-        getline(read, acc.fname);
-        getline(read, acc.dob);
-        if (acc.id == id) {
-            int amt;
-            cout<<"Enter Amount : ";
-            cin>>amt;
-            ofstream write;
-            write.open("cash_acc.txt",ios::app);
-            write<<id<<endl;
-            write<<amt<<endl;
-            cout<<"Amount Entered Successfully :";
-            
-        }
-        else{
-            cout<<"Invalid Account No";
-        }
-    }
-    main();
-    return 0;
-}
-void withdrawal(){
-    int id;
-    cout << "\n\tEnter Account ID to search : ";
-    cin >> id;
-    Account acc;
-    ifstream read;
-    read.open("data.txt");
-    while (!read.eof()) {
-        read >> acc.id;
-        read.ignore();
-        getline(read, acc.name);
-        getline(read, acc.fname);
-        getline(read, acc.dob);
-        if (acc.id == id) {
-            int amt;
-            cout<<"Enter Amount : ";
-            cin>>amt;
-            ofstream write;
-            write.open("cash_acc.txt");
-            write<<id<<endl;
-            write<<amt<<endl;
-            cout<<"Amount Entered Successfully :";
-            
-        }
-        else{
-            cout<<"Invalid Account No";
-        }
-    }
-    main();
-}
-
-
-///                                                           Reporting...
-///---------------------------------------------------------------
-///---------------------------------------------------------------------------------------------------------------    3
-
-    void account_summeries(){
-        int id,n,a;
-        cout << "\t\t\tAre you want to see All Accounts Details : "<<endl<<endl;
-        cout << "\t\t\tPress 1 to continue : "<<endl<<endl;
-        cout << "\t\t\tPress 0 to Back : "<<endl;
-        cin>>n;
-        if(n==1){
-            cout<<"Enter Password :";
-            cin>>id;
-            a=123;
-            if(id == a){
-                Account acc;
-                ifstream read;
-                read.open("data.txt");
-                while (!read.eof()) {
-                    read >> acc.id;
-                    read.ignore();
-                    getline(read, acc.name);
-                    getline(read, acc.fname);
-                    getline(read, acc.dob);
-                    
-                    cout<<"\t\t\t\t\tAccount Number : "<<acc.id<<endl;
-                    cout<<"\t\tUser Name : "<<acc.name<<endl;
-                    cout<<"\t\tUser Father Name : "<<acc.fname<<endl;
-                    cout<<"\t\tUser Date of Birth : "<<acc.dob<<endl<<endl<<endl<<endl;
-                    
+                if (accountType == 1) {
+                    SavingsAccount account(accountDetails[3], balance, stod(accountDetails[4]));
+                    account.withdraw(amount);
+                    balance = account.getBalance();
                 }
+                else if (accountType == 2) {
+                    CurrentAccount account(accountDetails[3], balance);
+                    account.withdraw(amount);
+                    balance = account.getBalance();
+                }
+
+                accountDetails[4] = to_string(balance);
             }
+            accountLines.push_back(line);
+        }
+
+        in.close();
+
+        if (accountFound) {
+            ofstream outputFile("Account.txt");
+            if (outputFile.is_open()) {
+                for (const string& accountLine : accountLines) {
+                    outputFile << accountLine << endl;
+                }
+                outputFile.close();
+                cout << "Withdrawal successful." << endl;
+            }
+            else {
+                cout << "Error in opening account file for withdrawal." << endl;
+            }
+        }
+        else {
+            cout << "Account not found." << endl;
+        }
+    }
+    else {
+        cout << "Error in opening account file." << endl;
+    }
+}
+ 
+int main() {
+    int choice;
+    string accountNumber;
+    
+    while (true) {
+        cout << " \n\n\t\t\t\t\t\t\t\t\t\t\tBanking System " << endl;
+        cout << "1. Create Account" << endl;
+        cout << "2. Display Account Details" << endl;
+        cout << "3. Deposit" << endl;
+        cout << "4. Withdraw" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        try {
+            switch (choice) {
+                case 1:
+                    createAccount();
+                    main();
+                    break;
+                case 2:
+                    cout << "Enter Account Number: ";
+                    cin.ignore();
+                    getline(cin, accountNumber);
+                    displayAccount(accountNumber);
+                    main();
+                    break;
+                case 3:
+                    cout << "Enter Account Number: ";
+                    cin.ignore();
+                    getline(cin, accountNumber);
+                    performDeposit(accountNumber);
+                    main();
+                    break;
+                case 4:
+                    cout << "Enter Account Number: ";
+                    cin.ignore();
+                    getline(cin, accountNumber);
+                    performWithdrawal(accountNumber);
+                    main();
+                    break;
+                case 5:
+                    cout << "Exiting program. Goodbye!" << endl;
+                    break;
+                default:
+                    throw runtime_error("Invalid choice. Please try again.");
+            }
+        }
+        catch (... ) {
+            cerr << "Error: "<< endl;
             main();
-            
         }
         
+        return 0;
     }
+    
+}
+
+
